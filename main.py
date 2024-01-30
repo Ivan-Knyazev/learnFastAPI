@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI, Request, Body
 from fastapi.templating import Jinja2Templates
 
@@ -21,3 +22,7 @@ async def calculate(num1: int = None, num2: int = None, data=Body()):
     else:
         result = num1 + num2
     return {"result": result}
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
