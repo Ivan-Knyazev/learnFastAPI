@@ -1,5 +1,7 @@
 # Test app for learn FastAPI
 
+![preview image](docs/preview.png)
+
 ## Run local
 
 - For work in network
