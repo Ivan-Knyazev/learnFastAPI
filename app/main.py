@@ -2,12 +2,12 @@ import uvicorn
 from fastapi import FastAPI, Request, Body
 from fastapi.templating import Jinja2Templates
 
-from app.models.models import User, UserCreate
+from app.models.models import User, UserCreate, Feedback, FeedbackResponse
 
 app = FastAPI(
     title="FastAPI Learn App",
     description="Is a test app)",
-    version="0.1",
+    version="1.0",
 )
 
 templates = Jinja2Templates(directory="templates")
@@ -38,13 +38,28 @@ async def get_test_user():
     return test_user.dict()
 
 
-@app.post("/user")
-async def create_user(user: User) -> UserCreate:
+@app.post("/user", response_model=UserCreate)
+async def create_user(user: User):
     if user.age < 18:
         return UserCreate(**user.model_dump())
     else:
         return UserCreate(**user.dict(), is_adult=True)
 
 
+feedbacks: list[Feedback] = []
+
+
+@app.post("/feedback", response_model=FeedbackResponse)
+async def create_feedback(feedback: Feedback):
+    feedbacks.append(feedback)
+    return FeedbackResponse(message=f"Feedback received. Thank you, {feedback.name}!")
+
+
+@app.get("/feedback", response_model=list[Feedback])
+async def get_all_feedback():
+    return feedbacks
+
+
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run(app)
+    # uvicorn.run(app, host="localhost", port=8000, reload=True)
