@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI, Request, Body
 from fastapi.templating import Jinja2Templates
 
-from app.models.models import User, UserCreate, Feedback, FeedbackResponse
+from app.models.models import *
 
 app = FastAPI(
     title="FastAPI Learn App",
@@ -38,12 +38,12 @@ async def get_test_user():
     return test_user.dict()
 
 
-@app.post("/user", response_model=UserCreate)
+@app.post("/user", response_model=UserCheck)
 async def create_user(user: User):
     if user.age < 18:
-        return UserCreate(**user.model_dump())
+        return UserCheck(**user.model_dump())
     else:
-        return UserCreate(**user.dict(), is_adult=True)
+        return UserCheck(**user.dict(), is_adult=True)
 
 
 feedbacks: list[Feedback] = []
@@ -58,6 +58,11 @@ async def create_feedback(feedback: Feedback):
 @app.get("/feedback", response_model=list[Feedback])
 async def get_all_feedback():
     return feedbacks
+
+
+@app.post("/create_user", response_model=UserCreate)
+async def create_user(user: UserCreate):
+    return user
 
 
 if __name__ == "__main__":
