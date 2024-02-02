@@ -1,35 +1,3 @@
-from pydantic import BaseModel, EmailStr
-from typing import Optional
-
-from unicodedata import category
-
-
-class User(BaseModel):
-    id: int
-    name: str
-    age: int
-
-
-class UserCheck(User):
-    is_adult: bool = False
-
-
-class UserCreate(BaseModel):
-    name: str
-    email: EmailStr
-    age: int | None = None
-    is_subscribed: bool = False
-
-
-class Feedback(BaseModel):
-    name: str
-    message: Optional[str] = None
-
-
-class FeedbackResponse(BaseModel):
-    message: str
-
-
 # Products
 sample_product_1 = {
     "product_id": 123,
@@ -67,10 +35,3 @@ sample_product_5 = {
 }
 
 sample_products = [sample_product_1, sample_product_2, sample_product_3, sample_product_4, sample_product_5]
-
-
-class Product(BaseModel):
-    product_id: int
-    name: str
-    category: str
-    price: float
