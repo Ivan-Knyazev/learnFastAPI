@@ -16,3 +16,8 @@ class UserCreate(BaseModel):
     email: EmailStr
     age: int | None = None
     is_subscribed: bool = False
+
+
+class User2(BaseModel):
+    username: str
+    password: str

@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from app.schemas import User, UserCheck, UserCreate
-from app.temp_data.user import test_user_1
+from app.temp_data.users import test_user_1
 
 test_user_router = APIRouter(
     prefix="/test_user",
