@@ -1,5 +1,5 @@
-import uvicorn
-from fastapi import FastAPI, HTTPException
+# import uvicorn
+from fastapi import FastAPI
 
 from app.routers import (calculate_router, test_user_router,
                          feedback_router, products_router,
@@ -19,4 +19,4 @@ app.include_router(auth_router)
 
 # if __name__ == "__main__":
 #     uvicorn.run(app)
-# uvicorn.run(app, host="localhost", port=8000, reload=True)
+#     uvicorn.run(app, host="localhost", port=8000, reload=True)
